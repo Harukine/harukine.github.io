@@ -1,0 +1,233 @@
+---
+const pathname = Astro.url.pathname;
+
+const navLinks = [
+  { href: '/',           label: 'Home'     },
+  { href: '/projects',   label: 'Projects' },
+  { href: '/resume',     label: 'Resume'   },
+  { href: '/now',        label: 'Now'      },
+  { href: '/uses',       label: 'Uses'     },
+];
+
+function isActive(href: string) {
+  if (href === '/') return pathname === '/' || pathname === '';
+  return pathname.startsWith(href);
+}
+---
+
+<nav class="site-nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo" aria-label="Jacob Nguyen — home">
+      jacob<span class="logo-dot">.</span>
+    </a>
+
+    <button
+      class="nav-toggle"
+      id="nav-toggle"
+      aria-label="Toggle menu"
+      aria-expanded="false"
+      aria-controls="nav-links"
+    >
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+
+    <ul class="nav-links" id="nav-links" role="list">
+      {navLinks.map(({ href, label }) => (
+        <li>
+          <a
+            href={href}
+            class:list={['nav-link', { 'nav-link--active': isActive(href) }]}
+            aria-current={isActive(href) ? 'page' : undefined}
+          >
+            {label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</nav>
+
+<style>
+  .site-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(10, 14, 26, 0.75);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  .nav-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  /* ── LOGO ── */
+  .nav-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-primary);
+    text-decoration: none;
+    letter-spacing: -0.3px;
+    transition: color 0.2s;
+    flex-shrink: 0;
+  }
+
+  .nav-logo:hover {
+    color: var(--accent-cyan);
+  }
+
+  .logo-dot {
+    color: var(--accent-blue);
+  }
+
+  /* ── LINKS ── */
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-link {
+    display: block;
+    padding: 6px 12px;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-radius: 8px;
+    transition: color 0.2s, background 0.2s;
+    position: relative;
+  }
+
+  .nav-link:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .nav-link--active {
+    color: var(--accent-blue);
+    background: rgba(99, 179, 237, 0.08);
+  }
+
+  .nav-link--active::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 16px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--accent-gradient);
+  }
+
+  /* ── HAMBURGER ── */
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .nav-toggle:hover {
+    background: rgba(255, 255, 255, 0.09);
+  }
+
+  .bar {
+    display: block;
+    width: 16px;
+    height: 1.5px;
+    background: var(--text-secondary);
+    border-radius: 2px;
+    transition: transform 0.3s ease, opacity 0.2s ease;
+  }
+
+  /* Open state */
+  .nav-toggle[aria-expanded="true"] .bar:nth-child(1) {
+    transform: translateY(6.5px) rotate(45deg);
+  }
+  .nav-toggle[aria-expanded="true"] .bar:nth-child(2) {
+    opacity: 0;
+  }
+  .nav-toggle[aria-expanded="true"] .bar:nth-child(3) {
+    transform: translateY(-6.5px) rotate(-45deg);
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 600px) {
+    .nav-toggle {
+      display: flex;
+    }
+
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 65px;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 2px;
+      padding: 12px 16px 16px;
+      background: rgba(10, 14, 26, 0.97);
+      backdrop-filter: blur(24px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .nav-links.is-open {
+      display: flex;
+    }
+
+    .nav-link {
+      padding: 10px 14px;
+      font-size: 14px;
+    }
+
+    .nav-link--active::after {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const toggle = document.getElementById('nav-toggle')!;
+  const links  = document.getElementById('nav-links')!;
+
+  toggle.addEventListener('click', () => {
+    const isOpen = links.classList.toggle('is-open');
+    toggle.setAttribute('aria-expanded', String(isOpen));
+  });
+
+  // Close on link click (mobile)
+  links.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      links.classList.remove('is-open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+</script>

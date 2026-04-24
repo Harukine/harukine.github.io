@@ -1,0 +1,180 @@
+---
+import Nav from '../components/Nav.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Huy Jacob Nguyen — Senior Software Engineer',
+  description = 'Senior Software Engineer with 8+ years of experience specializing in production-grade AI (RAG) and cloud-native architectures on Azure and Kubernetes. Currently in Tokyo.',
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
+</head>
+<body>
+  <Nav />
+  <div class="glow-orb-bottom"></div>
+  <div class="container">
+    <slot />
+  </div>
+</body>
+</html>
+
+<style is:global>
+  :root {
+    --bg-primary: #0a0e1a;
+    --bg-card: rgba(255, 255, 255, 0.04);
+    --bg-card-hover: rgba(255, 255, 255, 0.07);
+    --border: rgba(255, 255, 255, 0.08);
+    --border-accent: rgba(99, 179, 237, 0.3);
+    --accent-blue: #63b3ed;
+    --accent-cyan: #76e4f7;
+    --accent-gradient: linear-gradient(135deg, #63b3ed 0%, #76e4f7 50%, #b794f4 100%);
+    --text-primary: #e2e8f0;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --tag-bg: rgba(99, 179, 237, 0.1);
+    --tag-border: rgba(99, 179, 237, 0.2);
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+    /* 64px nav + 24px gap above content */
+    padding: 88px 20px 48px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Subtle background grid */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(99, 179, 237, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(99, 179, 237, 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Ambient glow orbs */
+  body::after {
+    content: '';
+    position: fixed;
+    top: -200px;
+    right: -200px;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(99, 179, 237, 0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .glow-orb-bottom {
+    position: fixed;
+    bottom: -200px;
+    left: -200px;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(183, 148, 244, 0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+
+
+  h2 {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  h2::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.5; transform: scale(0.85); }
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    body { background: #fff; color: #111; padding: 0; }
+    body::before, body::after, .glow-orb-bottom { display: none; }
+    :root {
+      --bg-card: #f8f9fa;
+      --border: #dee2e6;
+      --text-primary: #111;
+      --text-secondary: #444;
+      --text-muted: #666;
+      --accent-blue: #1a73e8;
+      --accent-cyan: #0891b2;
+      --tag-bg: #f0f4ff;
+      --tag-border: #c7d2fe;
+    }
+    .site-nav { display: none; }
+    .name { -webkit-text-fill-color: #111; color: #111; }
+    .card { box-shadow: none; break-inside: avoid; }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    body { padding: 80px 12px 40px; }
+  }
+</style>

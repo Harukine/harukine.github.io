@@ -1,0 +1,20 @@
+---
+// Employment History section — composed from typed job data
+import JobEntry from './JobEntry.astro';
+import { jobs } from '../data/experience';
+import Card from './ui/Card.astro';
+---
+
+<Card>
+  <h2>Employment History</h2>
+  {jobs.map((job) => (
+    <JobEntry
+      company={job.company}
+      role={job.role}
+      date={job.date}
+      location={job.location}
+      current={job.current}
+      bullets={job.bullets}
+    />
+  ))}
+</Card>

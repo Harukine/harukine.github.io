@@ -1,0 +1,52 @@
+---
+import Card from './ui/Card.astro';
+---
+
+<Card>
+  <h2>Education</h2>
+  <div class="education-card">
+    <div>
+      <div class="edu-degree">Bachelor of Computer Science</div>
+      <div class="edu-school">University of Toronto</div>
+    </div>
+    <div class="edu-location">Toronto, Ontario</div>
+  </div>
+</Card>
+
+<style>
+  .education-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    transition: all 0.2s;
+  }
+
+  .education-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-accent);
+  }
+
+  .edu-degree {
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .edu-school {
+    font-size: 13px;
+    color: var(--accent-blue);
+    margin-top: 2px;
+  }
+
+  .edu-location {
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-muted);
+  }
+</style>

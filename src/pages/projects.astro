@@ -1,0 +1,201 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+import { projects, type ProjectStatus } from '../data/projects';
+import Card from '../components/ui/Card.astro';
+import Tag from '../components/ui/Tag.astro';
+
+const statusConfig = {
+  active:   { label: 'In Progress', color: '#68d391', bg: 'rgba(104,211,145,0.08)', border: 'rgba(104,211,145,0.25)' },
+  shipped:  { label: 'Shipped',     color: '#63b3ed', bg: 'rgba(99,179,237,0.08)',  border: 'rgba(99,179,237,0.25)'  },
+  archived: { label: 'Archived',    color: '#64748b', bg: 'rgba(100,116,139,0.08)', border: 'rgba(100,116,139,0.25)' },
+};
+---
+
+<BaseLayout
+  title="Projects — Jacob Nguyen"
+  description="Side projects and experiments built by Jacob Nguyen."
+>
+  <div class="page-header">
+    <h1 class="page-title">Projects</h1>
+    <p class="page-subtitle">Things I build outside of work. Personal projects, tools, and experiments.</p>
+  </div>
+
+  <div class="projects-grid">
+    {projects.map((project) => {
+      const s = statusConfig[project.status];
+      return (
+        <Card className="project-card">
+          <span
+            class="project-status"
+            style={`color:${s.color};background:${s.bg};border-color:${s.border}`}
+          >
+            <span class="status-pip" style={`background:${s.color}`}></span>
+            {s.label}
+          </span>
+          <div class="project-card-top">
+            <h2 class="project-name">{project.name}</h2>
+            <p class="project-desc">{project.description}</p>
+          </div>
+          <div class="project-tags">
+            {project.tags.map((tag) => <Tag text={tag} />)}
+          </div>
+          {project.url && (
+            <a href={project.url} target="_blank" rel="noopener noreferrer" class="project-link">
+              View project →
+            </a>
+          )}
+        </Card>
+      );
+    })}
+
+    <!-- More coming placeholder -->
+    <Card className="project-card project-card--placeholder">
+      <p class="placeholder-text">More projects in the pipeline…</p>
+    </Card>
+  </div>
+</BaseLayout>
+
+<style>
+  /* ── PAGE HEADER ── */
+  .page-header {
+    margin-bottom: 28px;
+    animation: fadeInDown 0.5s ease both;
+  }
+
+  .page-title {
+    font-size: clamp(28px, 5vw, 40px);
+    font-weight: 700;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+  }
+
+  .page-subtitle {
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+
+  /* ── GRID ── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 16px;
+  }
+
+  /* ── CARD ── */
+  .project-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    backdrop-filter: blur(20px);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative; /* anchor for the absolute status badge */
+    transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+    animation: fadeInUp 0.6s ease both;
+  }
+
+  .project-card:hover {
+    border-color: var(--border-accent);
+    box-shadow: 0 0 32px rgba(99, 179, 237, 0.07);
+    transform: translateY(-2px);
+  }
+
+  .project-card--placeholder {
+    border-style: dashed;
+    align-items: center;
+    justify-content: center;
+    min-height: 120px;
+    opacity: 0.5;
+  }
+
+  .placeholder-text {
+    font-size: 13px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-muted);
+  }
+
+  /* ── CARD INTERNALS ── */
+  .project-card-top {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    /* leave room on the right so long names don't collide with the badge */
+    padding-right: 96px;
+  }
+
+  .project-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: -0.2px;
+  }
+
+  /* override global h2 styles */
+  .project-name::after {
+    display: none !important;
+  }
+
+  .project-status {
+    /* always sits in the top-right corner of the card */
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 100px;
+    border: 1px solid;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .status-pip {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    animation: pulse 2s infinite;
+  }
+
+  .project-desc {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .project-link {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--accent-blue);
+    text-decoration: none;
+    transition: color 0.2s;
+    margin-top: auto;
+  }
+
+  .project-link:hover {
+    color: var(--accent-cyan);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .projects-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

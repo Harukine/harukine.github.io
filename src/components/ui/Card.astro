@@ -1,0 +1,41 @@
+---
+interface Props {
+  className?: string;
+}
+
+const { className = '' } = Astro.props;
+---
+
+<section class:list={['card', className]}>
+  <slot />
+</section>
+
+<style>
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(20px);
+    transition: border-color 0.3s, box-shadow 0.3s;
+    animation: fadeInUp 0.6s ease both;
+  }
+
+  .card:hover {
+    border-color: var(--border-accent);
+    box-shadow: 0 0 30px rgba(99, 179, 237, 0.05);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 600px) {
+    .card {
+      padding: 20px 18px;
+    }
+  }
+</style>

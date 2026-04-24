@@ -1,0 +1,88 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Summary from '../components/Summary.astro';
+import Skills from '../components/Skills.astro';
+import Experience from '../components/Experience.astro';
+import Education from '../components/Education.astro';
+---
+
+<BaseLayout
+  title="Résumé — Jacob Nguyen"
+  description="Full professional resume for Huy Jacob Nguyen — Senior Software Engineer specializing in AI/RAG, .NET, Azure, and Kubernetes."
+>
+  <div class="page-header">
+    <div class="resume-header-row">
+      <div>
+        <h1 class="page-title">Résumé</h1>
+        <p class="page-subtitle">Jacob Nguyen · Senior Software Engineer · Tokyo / Toronto</p>
+      </div>
+      <div class="action-buttons">
+        <a href="mailto:jacobhtnguyen@gmail.com" class="contact-btn">Get in touch →</a>
+      </div>
+    </div>
+  </div>
+
+  <Summary />
+  <Skills />
+  <Experience />
+  <Education />
+</BaseLayout>
+
+<style>
+  .page-header {
+    margin-bottom: 24px;
+    animation: fadeInDown 0.5s ease both;
+  }
+
+  .resume-header-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .page-title {
+    font-size: clamp(28px, 5vw, 40px);
+    font-weight: 700;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.5px;
+    margin-bottom: 4px;
+  }
+
+  .page-subtitle {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .contact-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent-blue);
+    background: rgba(99, 179, 237, 0.08);
+    border: 1px solid rgba(99, 179, 237, 0.25);
+    border-radius: 10px;
+    text-decoration: none;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .contact-btn:hover {
+    background: rgba(99, 179, 237, 0.14);
+    border-color: var(--accent-blue);
+    transform: translateY(-1px);
+  }
+</style>

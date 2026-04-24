@@ -1,0 +1,139 @@
+---
+// Single job entry card
+interface Props {
+  company: string;
+  role: string;
+  date: string;
+  location: string;
+  current?: boolean;
+  bullets: string[];
+}
+
+const { company, role, date, location, current = false, bullets } = Astro.props;
+---
+
+<div class="job">
+  <div class="job-header">
+    <div class="job-left">
+      <span class="company">
+        {company}
+        {current && <span class="current-badge">Current</span>}
+      </span>
+      <div class="job-meta">
+        <span class="job-role">{role}</span>
+        <span class="job-location">· {location}</span>
+      </div>
+    </div>
+    <span class="job-date">{date}</span>
+  </div>
+  <ul>
+    {bullets.map((bullet) => (
+      <li set:html={bullet} />
+    ))}
+  </ul>
+</div>
+
+<style>
+  .job {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .job:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .job:first-child {
+    padding-top: 0;
+  }
+
+  .job-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .job-left {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .company {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .job-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .job-role {
+    font-size: 13px;
+    color: var(--accent-blue);
+    font-weight: 500;
+  }
+
+  .job-location {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  .job-date {
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border);
+    padding: 3px 10px;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+
+  .current-badge {
+    font-size: 10px;
+    font-weight: 600;
+    color: #68d391;
+    background: rgba(104, 211, 145, 0.1);
+    border: 1px solid rgba(104, 211, 145, 0.25);
+    padding: 2px 8px;
+    border-radius: 100px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  li {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    padding-left: 18px;
+    position: relative;
+  }
+
+  li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--accent-blue);
+    font-size: 10px;
+    top: 3px;
+  }
+</style>

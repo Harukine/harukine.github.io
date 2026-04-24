@@ -1,0 +1,141 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+import { nowItems, nowUpdated } from '../data/now';
+import Card from '../components/ui/Card.astro';
+---
+
+<BaseLayout
+  title="Now — Jacob Nguyen"
+  description="What Jacob Nguyen is working on, thinking about, and up to right now."
+>
+  <div class="page-header">
+    <h1 class="page-title">Now</h1>
+    <p class="page-subtitle">
+      A snapshot of what I'm up to these days.</p>
+  </div>
+
+  <div class="now-grid">
+    {nowItems.map((item) => (
+      <Card className="now-card">
+        <h2>{item.category}</h2>
+        <div class="now-item">
+          <div>
+            <p class="now-item-title">{item.title}</p>
+            <p class="now-item-desc">{item.description}</p>
+          </div>
+        </div>
+      </Card>
+    ))}
+  </div>
+
+  <p class="updated-at">Last updated: {nowUpdated}</p>
+</BaseLayout>
+
+<style>
+  .page-header {
+    margin-bottom: 28px;
+    animation: fadeInDown 0.5s ease both;
+  }
+
+  .page-title {
+    font-size: clamp(28px, 5vw, 40px);
+    font-weight: 700;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+  }
+
+  .page-subtitle {
+    font-size: 13.5px;
+    color: var(--text-muted);
+  }
+
+  .page-subtitle a {
+    color: var(--accent-blue);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .page-subtitle a:hover {
+    color: var(--accent-cyan);
+  }
+
+  /* ── GRID ── */
+  .now-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 16px;
+  }
+
+  /* ── CARD ── */
+  .now-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px 28px;
+    backdrop-filter: blur(20px);
+    transition: border-color 0.25s, box-shadow 0.25s;
+    animation: fadeInUp 0.6s ease both;
+    /* override global section hover */
+    margin-bottom: 0 !important;
+  }
+
+  .now-card:hover {
+    border-color: var(--border-accent);
+    box-shadow: 0 0 28px rgba(99, 179, 237, 0.06);
+  }
+
+  /* override global h2 */
+  .now-card h2 {
+    font-size: 10px;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+  }
+
+  /* ── ITEM ── */
+  .now-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .now-item-icon {
+    font-size: 24px;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .now-item-title {
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+
+  .now-item-desc {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  /* ── TIMESTAMP ── */
+  .updated-at {
+    margin-top: 28px;
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-muted);
+    text-align: center;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .now-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

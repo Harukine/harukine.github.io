@@ -1,0 +1,124 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+import { groups } from '../data/uses';
+import Card from '../components/ui/Card.astro';
+---
+
+<BaseLayout
+  title="Uses — Jacob Nguyen"
+  description="Hardware, software, and tools that I use daily."
+>
+  <div class="page-header">
+    <h1 class="page-title">Uses</h1>
+    <p class="page-subtitle">Hardware, software, and cars. The full stack of my life.</p>
+  </div>
+
+  <div class="uses-sections">
+    {groups.map((group) => (
+      <Card className="uses-section">
+        <h2>
+          <span class="section-icon" aria-hidden="true">{group.icon}</span>
+          {group.heading}
+        </h2>
+        <div class="uses-items">
+          {group.items.map((item) => (
+            <div class="uses-item">
+              <div class="uses-item-name">
+                {item.url
+                  ? <a href={item.url} target="_blank" rel="noopener noreferrer">{item.name}</a>
+                  : item.name
+                }
+              </div>
+              <p class="uses-item-desc">{item.description}</p>
+            </div>
+          ))}
+        </div>
+      </Card>
+    ))}
+  </div>
+</BaseLayout>
+
+<style>
+  .page-header {
+    margin-bottom: 28px;
+    animation: fadeInDown 0.5s ease both;
+  }
+
+  .page-title {
+    font-size: clamp(28px, 5vw, 40px);
+    font-weight: 700;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+  }
+
+  .page-subtitle {
+    font-size: 13.5px;
+    color: var(--text-muted);
+  }
+
+  /* ── SECTIONS ── */
+  .uses-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .uses-section {
+    /* keep global section styles */
+  }
+
+  /* override global h2 to show the icon */
+  .uses-section h2 {
+    gap: 8px;
+  }
+
+  .section-icon {
+    font-size: 14px;
+    opacity: 0.9;
+  }
+
+  /* ── ITEMS ── */
+  .uses-items {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .uses-item {
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .uses-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .uses-item-name {
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 5px;
+  }
+
+  .uses-item-name a {
+    color: var(--accent-blue);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .uses-item-name a:hover {
+    color: var(--accent-cyan);
+  }
+
+  .uses-item-desc {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+</style>

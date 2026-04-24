@@ -1,0 +1,11 @@
+# Astro build output
+dist/
+.astro/
+.idea/
+
+# Node
+node_modules/
+npm-debug.log*
+
+# OS
+.DS_Store
