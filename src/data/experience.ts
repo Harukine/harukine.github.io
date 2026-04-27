@@ -11,9 +11,9 @@ export const jobs: Job[] = [
   {
     company: 'Eitoss',
     role: 'Senior Software Engineer',
-    date: 'July 2023 – Present',
+    date: 'July 2023 – October 2025',
     location: 'Remote',
-    current: true,
+    current: false,
     bullets: [
       'Designed and shipped production .NET 8 APIs for RAG using Azure OpenAI and AI Search, featuring optimized response streaming and prompt templates.',
       'Built automated ingestion and indexing pipelines (Storage → Analyze → Index) with incremental re-indexing and data validation.',
