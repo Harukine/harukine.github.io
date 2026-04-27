@@ -17,6 +17,10 @@ import Education from '../components/Education.astro';
         <p class="page-subtitle">Jacob Nguyen · Senior Software Engineer · Tokyo / Toronto</p>
       </div>
       <div class="action-buttons">
+        <a href="/jacob_nguyen_resume.pdf" download class="download-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="btn-icon"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download PDF
+        </a>
         <a href="mailto:jacobhtnguyen@gmail.com" class="contact-btn">Get in touch →</a>
       </div>
     </div>
@@ -65,24 +69,45 @@ import Education from '../components/Education.astro';
     align-items: center;
   }
 
+  .download-btn,
   .contact-btn {
     display: inline-flex;
     align-items: center;
+    gap: 8px;
     padding: 9px 20px;
     font-size: 13px;
     font-weight: 600;
-    color: var(--accent-blue);
-    background: rgba(99, 179, 237, 0.08);
-    border: 1px solid rgba(99, 179, 237, 0.25);
     border-radius: 10px;
     text-decoration: none;
     transition: all 0.2s;
     white-space: nowrap;
   }
 
+  .download-btn {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+  }
+
+  .download-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--border-accent);
+    transform: translateY(-1px);
+  }
+
+  .contact-btn {
+    color: var(--accent-blue);
+    background: rgba(99, 179, 237, 0.08);
+    border: 1px solid rgba(99, 179, 237, 0.25);
+  }
+
   .contact-btn:hover {
     background: rgba(99, 179, 237, 0.14);
     border-color: var(--accent-blue);
     transform: translateY(-1px);
+  }
+
+  .btn-icon {
+    opacity: 0.8;
   }
 </style>
